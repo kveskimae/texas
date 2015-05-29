@@ -5,24 +5,17 @@ import java.util.Map;
 import club.texasholdem.card.Rank;
 
 public class SameRankedEvaluator {
-	
+
 	private EvaluationData data;
-	
-	protected Integer numberOfPairs = null;
-	
-	protected Boolean threeOfAKind = null;
-	
-	protected Boolean fourOfAKind = null;
+
+	private Integer numberOfPairs = 0;
+
+	private Boolean threeOfAKind = false;
+
+	private Boolean fourOfAKind = false;
 
 	public SameRankedEvaluator(final EvaluationData data) {
 		this.data = data;
-		initialize();
-	}
-
-	private void initialize() {
-		numberOfPairs = 0;
-		threeOfAKind = false;
-		fourOfAKind = false;
 		for (Integer sameRankedCount : counter().values()) {
 			addToCountIfPair(sameRankedCount);
 			checkThreeOfAKind(sameRankedCount);

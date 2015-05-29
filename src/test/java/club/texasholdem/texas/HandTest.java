@@ -7,8 +7,8 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
+import club.texasholdem.GameLogicException;
 import club.texasholdem.card.Card;
-import club.texasholdem.texas.evaluation.GameLogicException;
 
 public class HandTest extends TestCase {
 	

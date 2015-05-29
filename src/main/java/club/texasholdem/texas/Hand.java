@@ -1,7 +1,7 @@
 package club.texasholdem.texas;
 
+import club.texasholdem.GameLogicException;
 import club.texasholdem.card.Card;
-import club.texasholdem.texas.evaluation.GameLogicException;
 
 public class Hand {
 	

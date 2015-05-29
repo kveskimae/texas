@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import club.texasholdem.texas.evaluation.GameLogicException;
+import club.texasholdem.GameLogicException;
 
 public class CardPackTest extends TestCase {
 

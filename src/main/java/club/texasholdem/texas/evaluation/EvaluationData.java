@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 
+import club.texasholdem.GameLogicException;
 import club.texasholdem.card.Card;
 import club.texasholdem.card.Rank;
 import club.texasholdem.texas.Board;
@@ -14,13 +16,13 @@ public class EvaluationData {
 
 	private final Hand hand;
 	private final Board board;
-	private final List<Card> cards;
+	private final TreeSet<Card> orderedCards;
 	private final Map<Rank, Integer> ranksCounter = new HashMap<Rank, Integer>();
 
 	public EvaluationData(final Hand hand, final Board board) {
 		this.hand = hand;
 		this.board = board;
-		cards = new ArrayList<Card>();
+		orderedCards = new TreeSet<Card>();
 		verifyHandArgument(hand);
 		verifyBoardArgument(board);
 		initializeCards();
@@ -44,7 +46,7 @@ public class EvaluationData {
 
 	private void initializeRankCounter() {
 		ranksCounter.clear();
-		for (Card card : cards) {
+		for (Card card : orderedCards) {
 			Rank rank = card.getRank();
 			Integer rankCount = ranksCounter.get(rank);
 			if (rankCount == null) {
@@ -56,18 +58,22 @@ public class EvaluationData {
 	}
 
 	private void initializeCards() {
-		cards.clear();
-		cards.add(hand.getCard1());
-		cards.add(hand.getCard2());
-		cards.add(board.getFlop1());
-		cards.add(board.getFlop2());
-		cards.add(board.getFlop3());
+		orderedCards.clear();
+		orderedCards.add(hand.getCard1());
+		orderedCards.add(hand.getCard2());
+		orderedCards.add(board.getFlop1());
+		orderedCards.add(board.getFlop2());
+		orderedCards.add(board.getFlop3());
 		if (board.getTurn() != null) {
-			cards.add(board.getTurn());
+			orderedCards.add(board.getTurn());
 		}
 		if (board.getRiver() != null) {
-			cards.add(board.getRiver());
+			orderedCards.add(board.getRiver());
 		}
+	}
+
+	public TreeSet<Card> getOrderedCards() {
+		return orderedCards;
 	}
 
 	public Map<Rank, Integer> getRanksCounter() {

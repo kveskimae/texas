@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import club.texasholdem.texas.evaluation.GameLogicException;
+import club.texasholdem.GameLogicException;
 
 public class CardPack {
 	

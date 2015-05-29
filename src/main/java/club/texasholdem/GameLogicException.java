@@ -1,7 +1,5 @@
-package club.texasholdem.texas.evaluation;
+package club.texasholdem;
 
-import club.texasholdem.GameException;
-import club.texasholdem.GameExceptionType;
 
 public class GameLogicException extends GameException {
 

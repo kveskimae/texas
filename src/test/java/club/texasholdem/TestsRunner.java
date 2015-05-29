@@ -13,6 +13,7 @@ import club.texasholdem.texas.BoardTest;
 import club.texasholdem.texas.HandCombinationTest;
 import club.texasholdem.texas.HandTest;
 import club.texasholdem.texas.evaluation.HandEvaluatorTest;
+import club.texasholdem.texas.evaluation.TestEvaluationData;
 
 @RunWith(Suite.class)
 @SuiteClasses({
@@ -22,15 +23,22 @@ CardPackTest.class,
 
 CardTest.class,
 
-RankTest.class, SuitTest.class,
+RankTest.class, 
 
-HandEvaluatorTest.class,
+SuitTest.class,
 
 BoardTest.class,
 
 HandCombinationTest.class,
 
-HandTest.class })
+HandTest.class,
+
+HandEvaluatorTest.class,
+
+TestEvaluationData.class
+
+
+})
 public class TestsRunner {
 
 }

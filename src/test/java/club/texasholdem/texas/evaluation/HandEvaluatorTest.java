@@ -5,8 +5,10 @@ import static org.junit.Assert.assertThat;
 import junit.framework.TestCase;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import club.texasholdem.GameLogicException;
 import club.texasholdem.card.Card;
 import club.texasholdem.texas.Board;
 import club.texasholdem.texas.Hand;
@@ -14,39 +16,22 @@ import club.texasholdem.texas.HandCombination;
 
 public class HandEvaluatorTest extends TestCase {
 
-	private Hand hand;
+	private Hand hand, straightHand;
 
-	// FOUR_OF_A_KIND
-	private Board emptyBoard, highCardBoard, pairBoard, twoPairsBoard, threeOfAKindBoard, fullHouseBoard, fourOfAKindBoard;
+	private Board emptyBoard, highCardBoard, pairBoard, twoPairsBoard, threeOfAKindBoard, straightBoard, fullHouseBoard, fourOfAKindBoard;
 
 	@Before
 	public void setUp() throws Exception {
 		hand = new Hand(Card.EIGHT_OF_SPADES, Card.KING_OF_DIAMONDS);
+		straightHand = new Hand(Card.EIGHT_OF_SPADES, Card.JACK_OF_SPADES);
 		emptyBoard = new Board();
-		highCardBoard = new Board();
-		highCardBoard.setFlop1(Card.JACK_OF_CLUBS);
-		highCardBoard.setFlop2(Card.TWO_OF_CLUBS);
-		highCardBoard.setFlop3(Card.TEN_OF_DIAMONDS);
-		pairBoard = new Board();
-		pairBoard.setFlop1(Card.EIGHT_OF_DIAMONDS);
-		pairBoard.setFlop2(Card.SEVEN_OF_HEARTS);
-		pairBoard.setFlop3(Card.TWO_OF_HEARTS);
-		twoPairsBoard = new Board();
-		twoPairsBoard.setFlop1(Card.EIGHT_OF_DIAMONDS);
-		twoPairsBoard.setFlop2(Card.SEVEN_OF_HEARTS);
-		twoPairsBoard.setFlop3(Card.KING_OF_SPADES);
-		threeOfAKindBoard = new Board();
-		threeOfAKindBoard.setFlop1(Card.KING_OF_CLUBS);
-		threeOfAKindBoard.setFlop2(Card.SEVEN_OF_HEARTS);
-		threeOfAKindBoard.setFlop3(Card.KING_OF_SPADES);
-		fullHouseBoard = new Board();
-		fullHouseBoard.setFlop1(Card.KING_OF_CLUBS);
-		fullHouseBoard.setFlop2(Card.EIGHT_OF_HEARTS);
-		fullHouseBoard.setFlop3(Card.KING_OF_SPADES);
-		fourOfAKindBoard = new Board();
-		fourOfAKindBoard.setFlop1(Card.KING_OF_CLUBS);
-		fourOfAKindBoard.setFlop2(Card.KING_OF_HEARTS);
-		fourOfAKindBoard.setFlop3(Card.KING_OF_SPADES);
+		highCardBoard = Board.unmarshal("Jc,2c,Td");
+		pairBoard = Board.unmarshal("8d,7h,2h");
+		twoPairsBoard = Board.unmarshal("8d,7h,Ks");
+		threeOfAKindBoard = Board.unmarshal("Kc,7h,Ks");
+		straightBoard = Board.unmarshal("Ts,Qd,9c");
+		fullHouseBoard = Board.unmarshal("Kc,8h,Ks");
+		fourOfAKindBoard = Board.unmarshal("Kc,Kh,Ks");
 	}
 
 	@Test
@@ -93,6 +78,7 @@ public class HandEvaluatorTest extends TestCase {
 		assertEquals(HandCombination.PAIR, handRank);
 	}
 
+	// TODO two pairs comparison needs to take into account three pairs situation 
 	@Test
 	public void testTwoPairs() {
 		HandEvaluator evaluator = new HandEvaluator(hand, twoPairsBoard);
@@ -106,6 +92,15 @@ public class HandEvaluatorTest extends TestCase {
 		HandCombination handRank = evaluator.getBestCombination();
 		assertEquals(HandCombination.THREE_OF_A_KIND, handRank);
 	}
+
+	// TODO
+	/*
+	@Test
+	public void testStraight() {
+		HandEvaluator evaluator = new HandEvaluator(straightHand, straightBoard);
+		HandCombination handRank = evaluator.getBestCombination();
+		assertEquals(HandCombination.STRAIGHT, handRank);
+	}*/
 
 	@Test
 	public void testFullHouse() {

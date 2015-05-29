@@ -17,39 +17,7 @@ public class Board {
 	}
 
 	public static Board unmarshal(final String marshaled) {
-		if (marshaled == null) {
-			throw new GameMarshalException("Marshaled representation was null");
-		}
-		if (StringUtils.isBlank(marshaled)) {
-			return new Board();
-		}
-		String[] marshaledCards = marshaled.split(",");
-		if (marshaledCards.length < 3) {
-			throw new GameMarshalException("Marshaled board must be empty or contain at least 3 flop cards: '" + marshaled + "'");
-		}
-		if (marshaledCards.length > 5) {
-			throw new GameMarshalException("Marshaled board cannot contain more than 5 cards: '" + marshaled + "'");
-		}
-		List<Card> cards = new ArrayList<Card>();
-		for (String marshaledCard : marshaledCards) {
-			try {
-				Card card = Card.unmarshal(marshaledCard);
-				cards.add(card);
-			} catch (GameMarshalException me) {
-				throw new GameMarshalException("A card had malformed presentation: '" + marshaled + "'", me);
-			}
-		}
-		Board board = new Board();
-		board.flop1 = cards.get(0);
-		board.flop2 = cards.get(1);
-		board.flop3 = cards.get(2);
-		if (cards.size() > 3) {
-			board.turn = cards.get(3);
-		}
-		if (cards.size() > 4) {
-			board.river = cards.get(4);
-		}
-		return board;
+		return BoardUnmarshaler.unmarshal(marshaled);
 	}
 
 	public Card getFlop1() {
