@@ -1,0 +1,81 @@
+package club.texasholdem.texas.evaluation;
+
+import java.util.Map;
+
+import club.texasholdem.card.Rank;
+
+public class SameRankedEvaluator {
+	
+	private EvaluationData data;
+	
+	protected Integer numberOfPairs = null;
+	
+	protected Boolean threeOfAKind = null;
+	
+	protected Boolean fourOfAKind = null;
+
+	public SameRankedEvaluator(final EvaluationData data) {
+		this.data = data;
+		initialize();
+	}
+
+	private void initialize() {
+		numberOfPairs = 0;
+		threeOfAKind = false;
+		fourOfAKind = false;
+		for (Integer sameRankedCount : counter().values()) {
+			addToCountIfPair(sameRankedCount);
+			checkThreeOfAKind(sameRankedCount);
+			checkFourOfAKind(sameRankedCount);
+		}
+	}
+
+	private void checkFourOfAKind(final int count) {
+		if (count >= 4) {
+			fourOfAKind = true;
+		}
+	}
+
+	private void checkThreeOfAKind(final int count) {
+		if (count >= 3) {
+			threeOfAKind = true;
+		}
+	}
+
+	private void addToCountIfPair(final int count) {
+		if (count >= 2) {
+			numberOfPairs++;
+		}
+	}
+
+	private Map<Rank, Integer> counter() {
+		return data.getRanksCounter();
+	}
+
+	public boolean isFourOfAKind() {
+		return fourOfAKind;
+	}
+
+	public boolean isFullHouse() {
+		return threeOfAKind && numberOfPairs > 1;
+	}
+
+	public boolean isThreeOfAKind() {
+		return threeOfAKind;
+	}
+
+	public boolean isTwoPairs() {
+		if (numberOfPairs > 1) {
+			return true;
+		}
+		return false;
+	}
+
+	public boolean isPair() {
+		if (numberOfPairs > 0) {
+			return true;
+		}
+		return false;
+	}
+
+}
