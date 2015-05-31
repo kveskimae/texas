@@ -12,14 +12,14 @@ import club.texasholdem.card.Rank;
 import club.texasholdem.texas.Board;
 import club.texasholdem.texas.Hand;
 
-public class EvaluationData {
+public class HandData {
 
 	private final Hand hand;
 	private final Board board;
 	private final TreeSet<Card> orderedCards;
 	private final Map<Rank, Integer> ranksCounter = new HashMap<Rank, Integer>();
 
-	public EvaluationData(final Hand hand, final Board board) {
+	public HandData(final Hand hand, final Board board) {
 		this.hand = hand;
 		this.board = board;
 		orderedCards = new TreeSet<Card>();

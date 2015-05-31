@@ -1,26 +1,21 @@
 package club.texasholdem.texas.evaluation;
 
+import java.util.Iterator;
+import java.util.TreeSet;
+
+import club.texasholdem.card.Card;
 import club.texasholdem.card.Rank;
 
 public class StraightEvaluator {
 
-	private EvaluationData data;
+	private StraightEvaluatorData straightData;
 
-	private Boolean threeOfAKind = false;
-	
-	private Rank highestStraightCard;
-
-	public StraightEvaluator(final EvaluationData data) {
-		this.data = data;
-		checkStraight();
-	}
-	
-	public EvaluationData getData() {
-		return data;
+	public StraightEvaluator(final HandData data) {
+		this.straightData = new StraightEvaluatorData(data);
 	}
 
-	private void checkStraight() {
-		getData().getOrderedCards();
+	public boolean isStraight() {
+		return straightData.isStraight();
 	}
 
 }

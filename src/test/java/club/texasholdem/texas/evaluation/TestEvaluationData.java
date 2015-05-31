@@ -19,7 +19,7 @@ public class TestEvaluationData extends TestCase {
 	@Test
 	public void testFlopCardsAreOrdered() {
 		Board board = Board.unmarshal("Td,2c,Ah");
-		EvaluationData data = new EvaluationData(hand, board);
+		HandData data = new HandData(hand, board);
 		Iterator<Card> cards = data.getOrderedCards().iterator();
 		assertEquals(Card.ACE_OF_HEARTS, cards.next());
 		assertEquals(Rank.TWO, cards.next().getRank());
@@ -34,7 +34,7 @@ public class TestEvaluationData extends TestCase {
 		Card card2 = Card.TWO_OF_HEARTS;
 		Hand hand = new Hand(card1, card2);
 		Board board = Board.unmarshal("Td,Ks,2c,Ah");
-		EvaluationData data = new EvaluationData(hand, board);
+		HandData data = new HandData(hand, board);
 		Iterator<Card> cards = data.getOrderedCards().iterator();
 		assertEquals(Card.ACE_OF_HEARTS, cards.next());
 		assertEquals(Rank.TWO, cards.next().getRank());
@@ -50,7 +50,7 @@ public class TestEvaluationData extends TestCase {
 		Card card2 = Card.TWO_OF_HEARTS;
 		Hand hand = new Hand(card1, card2);
 		Board board = Board.unmarshal("8c,Td,Ks,2c,Ah");
-		EvaluationData data = new EvaluationData(hand, board);
+		HandData data = new HandData(hand, board);
 		Iterator<Card> cards = data.getOrderedCards().iterator();
 		assertEquals(Card.ACE_OF_HEARTS, cards.next());
 		assertEquals(Rank.TWO, cards.next().getRank());

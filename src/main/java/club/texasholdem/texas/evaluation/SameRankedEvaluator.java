@@ -6,7 +6,7 @@ import club.texasholdem.card.Rank;
 
 public class SameRankedEvaluator {
 
-	private EvaluationData data;
+	private HandData data;
 
 	private Integer numberOfPairs = 0;
 
@@ -14,7 +14,7 @@ public class SameRankedEvaluator {
 
 	private Boolean fourOfAKind = false;
 
-	public SameRankedEvaluator(final EvaluationData data) {
+	public SameRankedEvaluator(final HandData data) {
 		this.data = data;
 		for (Integer sameRankedCount : counter().values()) {
 			addToCountIfPair(sameRankedCount);

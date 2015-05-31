@@ -9,15 +9,18 @@ import club.texasholdem.texas.HandCombination;
 
 public class HandEvaluator {
 
-	private final EvaluationData data;
+	private final HandData data;
 	
 	private SameRankedEvaluator rankEvaluator;
+	
+	private StraightEvaluator straightEvaluator;
 
 	private HandCombination bestCombination;
 
 	public HandEvaluator(final Hand hand, final Board board) {
-		this.data = new EvaluationData(hand, board);
+		this.data = new HandData(hand, board);
 		this.rankEvaluator = new SameRankedEvaluator(this.data);
+		this.straightEvaluator = new StraightEvaluator(this.data);
 	}
 
 	public HandCombination getBestCombination() {
@@ -33,6 +36,9 @@ public class HandEvaluator {
 		}
 		if (this.rankEvaluator.isFullHouse()) {
 			return HandCombination.FULL_HOUSE;
+		}
+		if (this.straightEvaluator.isStraight()) {
+			return HandCombination.STRAIGHT;
 		}
 		if (this.rankEvaluator.isThreeOfAKind()) {
 			return HandCombination.THREE_OF_A_KIND;
