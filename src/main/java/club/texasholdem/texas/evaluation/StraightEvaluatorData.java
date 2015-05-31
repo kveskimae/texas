@@ -13,23 +13,22 @@ class StraightEvaluatorData {
 	private Integer lastRank = null;
 	private int inRowCounter = 1;
 	private boolean straight = false;
-	private final Iterator<Card> orderedIterator;
-	private final HandData data;
+	private boolean broadWay;
+	private TreeSet<Card> orderedCards;
 	
 	StraightEvaluatorData(final HandData data) {
-		this.data = data;
-		this.orderedIterator = getOrderedIterator(data);
+		this(data.getOrderedCards());
+	}
+
+	public StraightEvaluatorData(final TreeSet<Card> orderedCards) {
+		this.orderedCards = orderedCards;
 		checkStraight();
 	}
 
-	private Iterator<Card> getOrderedIterator(final HandData data) {
-		TreeSet<Card> orderedCards = data.getOrderedCards();
-		Iterator<Card> orderedIterator = orderedCards.descendingIterator();
-		return orderedIterator;
-	}
-	
 	private void checkStraight() {
-		if (isHighStraight()) {
+		Iterator<Card> orderedIterator = orderedCards.descendingIterator();
+		if (isBroadwayStraight()) {
+			broadWay = true;
 			straight = true;
 		} else {
 			while (orderedIterator.hasNext() && !straight) {
@@ -39,9 +38,9 @@ class StraightEvaluatorData {
 		}
 	}
 
-	private boolean isHighStraight() {
+	private boolean isBroadwayStraight() {
 		List<Rank> ranks = new ArrayList<Rank>();
-		for (Card card : data.getOrderedCards()) {
+		for (Card card : orderedCards) {
 			ranks.add(card.getRank());
 		}
 		if (ranks.contains(Rank.ACE) && ranks.contains(Rank.KING) && ranks.contains(Rank.QUEEN) && ranks.contains(Rank.JACK) && ranks.contains(Rank.TEN)) {
@@ -97,6 +96,10 @@ class StraightEvaluatorData {
 	
 	boolean isStraight() {
 		return straight;
+	}
+	
+	public boolean isBroadWay() {
+		return broadWay;
 	}
 
 }

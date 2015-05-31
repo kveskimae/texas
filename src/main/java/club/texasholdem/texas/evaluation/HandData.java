@@ -1,14 +1,13 @@
 package club.texasholdem.texas.evaluation;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
 import club.texasholdem.GameLogicException;
 import club.texasholdem.card.Card;
 import club.texasholdem.card.Rank;
+import club.texasholdem.card.Suit;
 import club.texasholdem.texas.Board;
 import club.texasholdem.texas.Hand;
 
@@ -17,7 +16,9 @@ public class HandData {
 	private final Hand hand;
 	private final Board board;
 	private final TreeSet<Card> orderedCards;
+	private final Map<Suit, TreeSet<Card>> flushCards = new HashMap<Suit, TreeSet<Card>>();
 	private final Map<Rank, Integer> ranksCounter = new HashMap<Rank, Integer>();
+	private final Map<Suit, Integer> suitsCounter = new HashMap<Suit, Integer>();
 
 	public HandData(final Hand hand, final Board board) {
 		this.hand = hand;
@@ -27,6 +28,21 @@ public class HandData {
 		verifyBoardArgument(board);
 		initializeCards();
 		initializeRankCounter();
+		initializeSuitsCounter();
+		initializeFlushCards();
+	}
+
+	private void initializeFlushCards() {
+		flushCards.clear();
+		for (Card card : orderedCards) {
+			Suit suit = card.getSuit();
+			TreeSet<Card> sameSuitCards = flushCards.get(suit);
+			if (sameSuitCards == null) {
+				sameSuitCards = new TreeSet<Card>();
+			}
+			sameSuitCards.add(card);
+			flushCards.put(suit, sameSuitCards);
+		}
 	}
 
 	private static void verifyHandArgument(final Hand hand) {
@@ -57,6 +73,19 @@ public class HandData {
 		}
 	}
 
+	private void initializeSuitsCounter() {
+		suitsCounter.clear();
+		for (Card card : orderedCards) {
+			Suit suit = card.getSuit();
+			Integer suitCount = suitsCounter.get(suit);
+			if (suitCount == null) {
+				suitCount = 0;
+			}
+			suitCount++;
+			suitsCounter.put(suit, suitCount);
+		}
+	}
+
 	private void initializeCards() {
 		orderedCards.clear();
 		orderedCards.add(hand.getCard1());
@@ -78,6 +107,14 @@ public class HandData {
 
 	public Map<Rank, Integer> getRanksCounter() {
 		return ranksCounter;
+	}
+
+	public Map<Suit, Integer> flushCardsCounter() {
+		return suitsCounter;
+	}
+	
+	public Map<Suit, TreeSet<Card>> getFlushCards() {
+		return flushCards;
 	}
 
 }

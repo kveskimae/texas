@@ -18,7 +18,28 @@ public class HandEvaluatorTest extends TestCase {
 
 	private Hand hand, straightHand, highStraightHand, lowStraightHand, straightWithRiverHighHand, straightWithRiverHand;
 
-	private Board emptyBoard, highCardBoard, pairBoard, twoPairsBoard, threeOfAKindBoard, straightBoard, highStraightBoard, lowStraightBoard, straightWithRiverHighBoard, straightWithRiverBoard, fullHouseBoard, fourOfAKindBoard;
+	private Board emptyBoard, 
+	
+	highCardBoard, 
+	
+	pairBoard, 
+	
+	twoPairsBoard, 
+	
+	threeOfAKindBoard, 
+	
+	straightBoard, highStraightBoard, lowStraightBoard, straightWithRiverHighBoard, straightWithRiverBoard, 
+	
+	flushBoard,
+	
+	fullHouseBoard, 
+	
+	fourOfAKindBoard,
+	
+	straightFlushBoard,
+	
+	royalFlushBoard
+	;
 
 	@Before
 	public void setUp() throws Exception {
@@ -36,10 +57,13 @@ public class HandEvaluatorTest extends TestCase {
 		straightBoard = Board.unmarshal("Ts,Qd,9c");
 		highStraightBoard = Board.unmarshal("Ts,Ah,Kd");
 		lowStraightBoard = Board.unmarshal("4h,Ac,2s");
-		straightWithRiverHighBoard = Board.unmarshal("Jd,3c,Th,Ad,Qs"); // 3c,6h,9d,Th,Jd,Qs,Kh,Ad
+		straightWithRiverHighBoard = Board.unmarshal("Jd,3c,Th,Ad,Qs"); // 3c,6h,Th,Jd,Qs,Kh,Ad
 		straightWithRiverBoard = Board.unmarshal("Jd,3c,Th,6d,Qs");
+		flushBoard = Board.unmarshal("Jd,3d,Th,6d,Qd"); // 8s,Kd,Jd,3d,Th,6d,Qd
 		fullHouseBoard = Board.unmarshal("Kc,8h,Ks");
 		fourOfAKindBoard = Board.unmarshal("Kc,Kh,Ks");
+		straightFlushBoard = Board.unmarshal("6s,9s,7c,7s,Ts"); // 6s, 7s, 7c, 8s, 9s, Ts, Kd
+		royalFlushBoard = Board.unmarshal("Qd,Ad,Jd,Jc,Td"); // 8s, Td, Jd, Jc Qd, Kd, Ad
 	}
 
 	@Test
@@ -138,6 +162,13 @@ public class HandEvaluatorTest extends TestCase {
 	}
 
 	@Test
+	public void testFlush() {
+		HandEvaluator evaluator = new HandEvaluator(hand, flushBoard);
+		HandCombination handRank = evaluator.getBestCombination();
+		assertEquals(HandCombination.FLUSH, handRank);
+	}
+
+	@Test
 	public void testFullHouse() {
 		HandEvaluator evaluator = new HandEvaluator(hand, fullHouseBoard);
 		HandCombination handRank = evaluator.getBestCombination();
@@ -151,14 +182,18 @@ public class HandEvaluatorTest extends TestCase {
 		assertEquals(HandCombination.FOUR_OF_A_KIND, handRank);
 	}
 
-	/*
-	 * ROYAL_FLUSH,
-	 * 
-	 * STRAIGHT_FLUSH,
-	 * 
-	 * FLUSH,
-	 * 
-	 * STRAIGHT,
-	 */
+	@Test
+	public void testStraightFlush() {
+		HandEvaluator evaluator = new HandEvaluator(hand, straightFlushBoard);
+		HandCombination handRank = evaluator.getBestCombination();
+		assertEquals(HandCombination.STRAIGHT_FLUSH, handRank);
+	}
 
+	@Test
+	public void testRoyalFlush() {
+		HandEvaluator evaluator = new HandEvaluator(hand, royalFlushBoard);
+		HandCombination handRank = evaluator.getBestCombination();
+		assertEquals(HandCombination.ROYAL_FLUSH, handRank);
+	}
+	
 }

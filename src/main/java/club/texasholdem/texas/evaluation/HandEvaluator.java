@@ -14,6 +14,10 @@ public class HandEvaluator {
 	private SameRankedEvaluator rankEvaluator;
 	
 	private StraightEvaluator straightEvaluator;
+	
+	private FlushEvaluator flushEvaluator;
+	
+	private StraightFlushEvaluator straightFlushEvaluator;
 
 	private HandCombination bestCombination;
 
@@ -21,6 +25,8 @@ public class HandEvaluator {
 		this.data = new HandData(hand, board);
 		this.rankEvaluator = new SameRankedEvaluator(this.data);
 		this.straightEvaluator = new StraightEvaluator(this.data);
+		this.flushEvaluator = new FlushEvaluator(this.data);
+		this.straightFlushEvaluator = new StraightFlushEvaluator(this.data);
 	}
 
 	public HandCombination getBestCombination() {
@@ -31,11 +37,20 @@ public class HandEvaluator {
 	}
 
 	private HandCombination findBestCombination() {
+		if (this.straightFlushEvaluator.isRoyalFlush()) {
+			return HandCombination.ROYAL_FLUSH;
+		}
+		if (this.straightFlushEvaluator.isStraightFlush()) {
+			return HandCombination.STRAIGHT_FLUSH;
+		}
 		if (this.rankEvaluator.isFourOfAKind()) {
 			return HandCombination.FOUR_OF_A_KIND;
 		}
 		if (this.rankEvaluator.isFullHouse()) {
 			return HandCombination.FULL_HOUSE;
+		}
+		if (this.flushEvaluator.isFlush()) {
+			return HandCombination.FLUSH;
 		}
 		if (this.straightEvaluator.isStraight()) {
 			return HandCombination.STRAIGHT;

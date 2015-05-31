@@ -6,7 +6,7 @@ import club.texasholdem.card.Rank;
 
 public class SameRankedEvaluator {
 
-	private HandData data;
+	private final HandData data;
 
 	private Integer numberOfPairs = 0;
 

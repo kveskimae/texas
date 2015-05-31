@@ -8,7 +8,7 @@ import club.texasholdem.card.Rank;
 
 public class StraightEvaluator {
 
-	private StraightEvaluatorData straightData;
+	private final StraightEvaluatorData straightData;
 
 	public StraightEvaluator(final HandData data) {
 		this.straightData = new StraightEvaluatorData(data);
