@@ -11,7 +11,7 @@ public class CardPackFactoryTest extends TestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		pack = CardPackFactory.createShuffledPack();
+		pack = (new CardPackFactory()).createShuffledPack();
 	}
 
 	@Test

@@ -10,7 +10,7 @@ public class CardPackFactory {
 	public CardPackFactory() {
 	}
 	
-	public static CardPack createShuffledPack() {
+	public CardPack createShuffledPack() {
 		List<Card> cards = new ArrayList<Card>();
 		cards.addAll(Arrays.asList(Card.values()));
 		Collections.shuffle(cards);
